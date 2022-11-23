@@ -49,7 +49,7 @@ const TransactionComponent = (props) => {
 
     return(
         <Container>
-            Transactionsss
+            Transactions
             {props.transactions?.length ? props.transactions.map((payload) => <TransactionCell payload={payload} />) : ""}
             </Container>
     )
