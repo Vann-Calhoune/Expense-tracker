@@ -1,8 +1,6 @@
 import React from 'react';
-import { useState } from 'react';
 import styled from 'styled-components'
 import HomeComponent from './modules/home';
-import OverviewComponent from './modules/home/OverviewComponent';
 
 const Container = styled.div`
 display: flex;
