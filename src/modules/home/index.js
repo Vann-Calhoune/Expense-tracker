@@ -26,6 +26,7 @@ const addTransaction = (payload) => {
 const calBalance = () => {
     let exp = 0;
     let inc = 0;
+    // eslint-disable-next-line array-callback-return
     transactions.map((payload) => {
         payload.type === "EXPENSE"
          ? (exp = exp + payload.amount) 
@@ -35,6 +36,7 @@ const calBalance = () => {
     updateIncome(inc);
 };
 
+// eslint-disable-next-line react-hooks/exhaustive-deps
 useEffect(() => calBalance(), [transactions]);
 
     return(
