@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+import { FaTimes } from 'react-icons/fa'
+
+ 
+
 const Container = styled.div`
 display: flex;
 flex-direction: column;
@@ -34,23 +38,24 @@ border-radius: 3px;
 `
 
 const TransactionCell = (props) => {
-    return(<Cell isExpense={props.payload?.type === "EXPENSE"}>
-       
-            <span>{props.payload.desc}</span>
-            <span>${props.payload.amount}</span>
-        
 
+
+    return(<Cell isExpense={props.payload?.type === "EXPENSE"}>
+            <span>{props.payload.desc}</span>
+            <span>${props.payload.amount}</span><FaTimes style={{ color: 'red', cursor: 'pointer' }} onClick={() => props.onDelete(props.payload.id)} />
     </Cell>)
 };
 
 const TransactionComponent = (props) => {
+
+
     
 
     return(
         <Container>
             Transactions
-            {props.transactions?.length ? props.transactions.map((payload) => <TransactionCell payload={payload} />) : ""}
-            </Container>
+            {props.transactions?.length ? props.transactions.map((payload) => <TransactionCell payload={payload} key={payload.id} onDelete={props.onDelete} />) : ""} 
+        </Container>
     )
 }
 
