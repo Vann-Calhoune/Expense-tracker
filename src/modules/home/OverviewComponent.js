@@ -76,6 +76,10 @@ font-size: 14px;
     color: ${props => props.isIncome ? 'green' : 'red'}
 }
 `
+const Netbox = styled.div`
+color: ${props => props.isRed ? "red" : "green"}`;
+
+
 
 const AddTransactionView = (props) => {
     const [amount, setAmount] = useState();
@@ -84,7 +88,6 @@ const AddTransactionView = (props) => {
 
     const addTransaction = () => {
         props.addTransaction({ amount:Number(amount), desc, type, id: Date.now(), })
-        props.toggleAddVisible()
     }
 
 
@@ -116,11 +119,14 @@ const AddTransactionView = (props) => {
 
 const OverviewComponent = (props) => {
     const [isAddVisible, toggleAddVisible] = useState(false)
+    
     return(
         <Container>
             <BalanceBox>
+                <Netbox isRed={props.income - props.expense <= 0 ? true : false}>
                 Net Profit: ${props.income - props.expense}
-                <AddTransaction onClick={() => toggleAddVisible(!isAddVisible)}>{isAddVisible ? "Cancel" : "ADD"}</AddTransaction>
+                </Netbox>
+                <AddTransaction onClick={() => toggleAddVisible(!isAddVisible)}>{isAddVisible ? "CLOSE" : "ADD"}</AddTransaction>
             </BalanceBox>
             {isAddVisible && <AddTransactionView toggleAddVisible={toggleAddVisible} addTransaction={props.addTransaction} />}
             <ExpenseContainer>

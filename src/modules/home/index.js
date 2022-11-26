@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import OverviewComponent from './OverviewComponent';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import TransactionComponent from './TransactionComponent';
 import React from 'react';
+import useLocalStorage from '../../hooks/useLocalStorage'
 
 const Container = styled.div`
 display: flex;
@@ -13,15 +14,29 @@ width: 360px;
 `;
 
 const HomeComponent = (props) => {
-const [transactions, updateTransaction] = useState([]);
-const [expense, updateExpense] = useState(0);
-const [income, updateIncome] = useState(0);
+const [transactions, updateTransaction] = useLocalStorage('transactions', []);
+const [expense, updateExpense] = useLocalStorage('expenses', 0);
+const [income, updateIncome] = useLocalStorage('income', 0);
 
 const addTransaction = (payload) => {
     const transactionArray = [...transactions];
     transactionArray.push(payload);
     updateTransaction(transactionArray);
+    console.log(payload.id);
 }
+
+
+
+const deleteTransaction = (id) => {
+    console.log(id)
+    const setNewTransactions =
+   transactions.filter((transactions) => transactions.id !== id)
+   updateTransaction(setNewTransactions)
+    
+}
+
+
+
 
 const calBalance = () => {
     let exp = 0;
@@ -39,10 +54,14 @@ const calBalance = () => {
 // eslint-disable-next-line react-hooks/exhaustive-deps
 useEffect(() => calBalance(), [transactions]);
 
+
     return(
         <Container>
-            <OverviewComponent addTransaction={addTransaction} expense={expense} income={income}/>
-            <TransactionComponent transactions={transactions}/>
+            <OverviewComponent addTransaction={addTransaction} 
+            expense={expense} income={income}/>
+            <TransactionComponent transactions={transactions}
+            onDelete={deleteTransaction}
+            />
         </Container>
     )
 }

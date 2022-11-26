@@ -20,8 +20,6 @@ function App() {
     <Container >
       <Header>Net Cash</Header>
       <HomeComponent />
-      
-      
     </Container>
   );
 }
